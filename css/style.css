@@ -1,0 +1,38 @@
+.accordion-menu {
+  padding-bottom: 40px;
+}
+
+.accordion-menu button {
+  width: 100%;
+}
+
+.accordion-menu p {
+  text-align: center;
+  display: none;
+}
+
+.accordion-menu p.active {
+  display: block;
+}
+
+.stopwatch {
+  background-color: #FFA600;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.stopwatch button {
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
+.stopwatch button:hover {
+  background-color: white;
+  color: #FFA600;
+}
+/*# sourceMappingURL=style.css.map */
