@@ -1,52 +1,41 @@
+const url = "https://api.openweathermap.org/data/2.5/";
+const key = "a429f2dd32af2654c8736ac896712c14";
 
 
-    window.onload=function(){
-        var seconds = 00;
-        var tens = 00;
-        var appendTens = document.querySelector(".stopwatch .tens");
-        var appendSeconds = document.querySelector(".stopwatch .seconds");
-        var buttonStart = document.querySelector(".stopwatch .button-start");
-        var buttonStop = document.querySelector(".stopwatch .button-stop");
-        var buttonReset = document.querySelector(".stopwatch .button-reset");
-        var Interval;
-
-
-        buttonStart.onclick=function(){
-            clearInterval(Interval)
-            Interval = setInterval(startTimer, 10)
-        }
-
-        buttonStop.onclick= function(){
-            clearInterval(Interval)
-        }
-        buttonReset.onclick= function(){
-            clearInterval(Interval)
-            tens= "00";
-            seconds= "00";
-            appendSeconds.innerHTML= seconds;
-            appendTens.innerHTML = tens;
-        }
-
-        function startTimer(){
-            tens++;
-            if (tens <= 9) {
-                appendTens.innerHTML = "0" + tens;
-            }
-            
-            if (tens > 9) {
-                appendTens.innerHTML = tens;
-            }
-
-            if (tens > 99) {
-                seconds++;
-                appendSeconds.innerHTML= "0" + seconds;
-                tens = 0;
-                appendTens.innerHTML = "0" + 0;
-            }
-            if (seconds>9) {
-                appendSeconds.innerHTML = seconds;
-
-            }
-        }
-
+const setQuery = (e) =>{
+    if(e.keyCode == '13'){
+        getResult(searchBar.value)
     }
+}
+
+
+const getResult =(cityName) =>{
+    let query = `${url}weather?q=${cityName}&appid=${key}&units=metric&lang=az`
+    fetch(query)
+    .then(weather => {
+        return weather.json()
+    })
+    .then(displayResult)
+}
+
+
+const displayResult = (result) => {
+    let city = document.querySelector('.city')
+    city.innerText = `${result.name} , ${result.sys.country}`
+
+    let temp = document.querySelector('.temp')
+    temp.innerText = `${Math.round(result.main.temp)}°C`
+
+    let desc = document.querySelector('.desc')
+    desc.innerText = result.weather[0].description
+
+    let minmax = document.querySelector('.minmax')
+    minmax.innerText = `${Math.round(result.main.temp_min)}°C / 
+    ${Math.round(result.main.temp_max)}°C`
+
+
+}
+
+
+const searchBar = document.getElementById("searchBar");
+searchBar.addEventListener('keypress' , setQuery)
